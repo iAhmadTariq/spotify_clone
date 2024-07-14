@@ -8,6 +8,7 @@ import 'package:spotify_clone/presentation/choose_mode/bloc/theme_cubit.dart';
 
 import '../../../common/widgets/buttons/primary_app_button.dart';
 import '../../../core/configs/assets/app_vectors.dart';
+import '../../auth/pages/auth_page.dart';
 
 class ChooseModePage extends StatelessWidget {
   const ChooseModePage({super.key});
@@ -122,9 +123,10 @@ class ChooseModePage extends StatelessWidget {
                         const Text(
                           'Light Mode',
                           style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                              color: AppColors.grey),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            color: AppColors.grey,
+                          ),
                         ),
                       ],
                     ),
@@ -135,10 +137,10 @@ class ChooseModePage extends StatelessWidget {
                 ),
                 PrimaryAppButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ChooseModePage(),
+                        builder: (context) => const AuthPage(),
                       ),
                     );
                   },

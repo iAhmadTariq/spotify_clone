@@ -6,4 +6,6 @@ class AppVectors{
 
   static const sunIcon = '${basePath}sun$format';
   static const moonIcon = '${basePath}moon$format';
+  static const topDesignAuthPage = '${basePath}top_design$format';
+  static const bottomDesignAuthPage = '${basePath}bottom_design$format';
 }

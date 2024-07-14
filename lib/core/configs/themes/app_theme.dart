@@ -34,6 +34,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(30)
         )
       )
-    )
+    ),
   );
 }

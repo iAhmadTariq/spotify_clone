@@ -26,7 +26,7 @@ class GetStartedPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
             
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +62,7 @@ class GetStartedPage extends StatelessWidget {
                   height: 20,
                 ),
                 PrimaryAppButton(onPressed: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChooseModePage()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ChooseModePage()));
                 }, title: 'Get Started')
               ],
             ),

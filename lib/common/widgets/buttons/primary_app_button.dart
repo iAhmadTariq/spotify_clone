@@ -12,9 +12,12 @@ class PrimaryAppButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        minimumSize: Size.fromHeight(height??80),
+        minimumSize: Size.fromHeight(height ?? 80),
       ),
-      child: Text(title),
+      child: Text(
+        title,
+        style: const TextStyle(color: Colors.white),
+      ),
     );
   }
 }

@@ -29,7 +29,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primaryColor,
         elevation: 0,
-        textStyle: const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+        textStyle: const TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30)
         )

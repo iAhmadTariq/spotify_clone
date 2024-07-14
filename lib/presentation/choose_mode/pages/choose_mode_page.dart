@@ -1,10 +1,10 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:spotify_clone/core/configs/assets/app_images.dart';
 import 'package:spotify_clone/core/configs/themes/app_colors.dart';
+import 'package:spotify_clone/presentation/choose_mode/bloc/theme_cubit.dart';
 
 import '../../../common/widgets/buttons/primary_app_button.dart';
 import '../../../core/configs/assets/app_vectors.dart';
@@ -26,8 +26,7 @@ class ChooseModePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-            
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -35,8 +34,8 @@ class ChooseModePage extends StatelessWidget {
                   height: 20,
                 ),
                 Align(
-                  alignment: Alignment.topCenter,
-                  child: SvgPicture.asset(AppVectors.logo)),
+                    alignment: Alignment.topCenter,
+                    child: SvgPicture.asset(AppVectors.logo)),
                 const Spacer(),
                 const Text(
                   'Choose Mode',
@@ -54,17 +53,26 @@ class ChooseModePage extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        ClipOval(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10,sigmaY: 10),
-                            child: Container(
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                color: AppColors.grey.withOpacity(0.5),
-                                shape: BoxShape.circle
+                        GestureDetector(
+                          onTap: () {
+                            context
+                                .read<ThemeCubit>()
+                                .updateTheme(ThemeMode.dark);
+                          },
+                          child: ClipOval(
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                    color: AppColors.grey.withOpacity(0.5),
+                                    shape: BoxShape.circle),
+                                child: SvgPicture.asset(
+                                  AppVectors.moonIcon,
+                                  fit: BoxFit.none,
+                                ),
                               ),
-                              child: SvgPicture.asset(AppVectors.moonIcon,fit: BoxFit.none,),
                             ),
                           ),
                         ),
@@ -74,10 +82,9 @@ class ChooseModePage extends StatelessWidget {
                         const Text(
                           'Dark Mode',
                           style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                            color: AppColors.grey
-                          ),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: AppColors.grey),
                         ),
                       ],
                     ),
@@ -86,17 +93,26 @@ class ChooseModePage extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        ClipOval(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10,sigmaY: 10),
-                            child: Container(
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                color: AppColors.grey.withOpacity(0.3),
-                                shape: BoxShape.circle
+                        GestureDetector(
+                          onTap: () {
+                            context
+                                .read<ThemeCubit>()
+                                .updateTheme(ThemeMode.light);
+                          },
+                          child: ClipOval(
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                              child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                    color: AppColors.grey.withOpacity(0.3),
+                                    shape: BoxShape.circle),
+                                child: SvgPicture.asset(
+                                  AppVectors.sunIcon,
+                                  fit: BoxFit.none,
+                                ),
                               ),
-                              child: SvgPicture.asset(AppVectors.sunIcon,fit: BoxFit.none,),
                             ),
                           ),
                         ),
@@ -106,10 +122,9 @@ class ChooseModePage extends StatelessWidget {
                         const Text(
                           'Light Mode',
                           style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                            color: AppColors.grey
-                          ),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: AppColors.grey),
                         ),
                       ],
                     ),
@@ -118,9 +133,17 @@ class ChooseModePage extends StatelessWidget {
                 const SizedBox(
                   height: 60,
                 ),
-                PrimaryAppButton(onPressed: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChooseModePage()));
-                }, title: 'Continue')
+                PrimaryAppButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChooseModePage(),
+                      ),
+                    );
+                  },
+                  title: 'Continue',
+                )
               ],
             ),
           ),

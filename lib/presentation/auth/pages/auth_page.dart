@@ -29,7 +29,10 @@ class AuthPage extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.bottomLeft,
-            child: Image.asset(AppImages.authPageImage),
+            child: Opacity(
+              opacity: 0.8, 
+              child: Image.asset(AppImages.authPageImage),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(

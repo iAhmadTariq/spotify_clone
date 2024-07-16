@@ -37,7 +37,6 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
       );
       var userData =
           UserModel(email: user.email, fullName: user.fullName).toJson();
-      print(userData);
       await firestore
           .collection(FirebaseConst.users)
           .doc(data.user?.uid)

@@ -4,8 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify_clone/common/widgets/buttons/primary_app_button.dart';
 import 'package:spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:spotify_clone/core/configs/themes/app_colors.dart';
+import 'package:spotify_clone/domain/entities/auth/user_entity.dart';
+import 'package:spotify_clone/domain/usecases/auth/signup_usecase.dart';
 import 'package:spotify_clone/presentation/auth/pages/signin_page.dart';
 import 'package:spotify_clone/presentation/auth/widgets/text_field_widget.dart';
+import 'package:spotify_clone/presentation/root/pages/root_page.dart';
+import 'package:spotify_clone/service_locator.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
@@ -69,7 +73,26 @@ class SignUpPage extends StatelessWidget {
                   height: 15,
                 ),
                 PrimaryAppButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    var result = await sl<SignUpUsecase>().call(
+                        params: UserEntity(
+                            fullName: _fullNameController.text.trim(),
+                            email: _emailController.text.trim(),
+                            password: _passwordController.text.trim()));
+                    result.fold((l) {
+                      var snackbar = SnackBar(
+                        content: Text(l),
+                        behavior: SnackBarBehavior.floating,
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    }, (r) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RootPage()),
+                          (route) => false);
+                    });
+                  },
                   title: 'Create Account',
                   height: 70,
                 ),
@@ -97,7 +120,8 @@ class SignUpPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignInPage()));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => SignInPage()));
             },
             child: const Text(
               'Sign In',

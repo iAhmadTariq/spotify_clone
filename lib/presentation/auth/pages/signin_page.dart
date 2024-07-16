@@ -4,12 +4,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify_clone/common/widgets/buttons/primary_app_button.dart';
 import 'package:spotify_clone/core/configs/assets/app_vectors.dart';
 import 'package:spotify_clone/core/configs/themes/app_colors.dart';
+import 'package:spotify_clone/domain/usecases/auth/signin_usecase.dart';
 import 'package:spotify_clone/presentation/auth/pages/signup_page.dart';
 import 'package:spotify_clone/presentation/auth/widgets/text_field_widget.dart';
 
+import '../../../domain/entities/auth/user_entity.dart';
+import '../../../service_locator.dart';
+import '../../root/pages/root_page.dart';
+
 class SignInPage extends StatelessWidget {
   SignInPage({super.key});
-
 
   final TextEditingController _emailController = TextEditingController();
 
@@ -60,7 +64,24 @@ class SignInPage extends StatelessWidget {
                   height: 15,
                 ),
                 PrimaryAppButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    var result = await sl<SignInUsecase>().call(
+                      params: UserEntity(
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text.trim(),
+                      ),
+                    );
+                    result.fold((l) {
+                      var snackbar = SnackBar(content: Text(l),behavior: SnackBarBehavior.floating,);
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    }, (r) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RootPage()),
+                          (route) => false);
+                    });
+                  },
                   title: 'Sign In',
                   height: 70,
                 ),
@@ -88,7 +109,8 @@ class SignInPage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()));
             },
             child: const Text(
               'Register Now',

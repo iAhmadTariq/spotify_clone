@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:spotify_clone/common/widgets/appbar/app_bar_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify_clone/common/widgets/buttons/primary_app_button.dart';
@@ -12,12 +13,17 @@ import '../../../domain/entities/auth/user_entity.dart';
 import '../../../service_locator.dart';
 import '../../home/pages/home_page.dart';
 
-class SignInPage extends StatelessWidget {
-  SignInPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,25 +70,14 @@ class SignInPage extends StatelessWidget {
                   height: 15,
                 ),
                 PrimaryAppButton(
-                  onPressed: () async {
-                    var result = await sl<SignInUsecase>().call(
-                      params: UserEntity(
-                        email: _emailController.text.trim(),
-                        password: _passwordController.text.trim(),
-                      ),
-                    );
-                    result.fold((l) {
-                      var snackbar = SnackBar(content: Text(l),behavior: SnackBarBehavior.floating,);
-                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                    }, (r) {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()),
-                          (route) => false);
-                    });
-                  },
-                  title: 'Sign In',
+                  onPressed: _signinAction,
+                  title: _isLoading
+                      ? LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white, size: 50)
+                      : const Text(
+                          'Sign in',
+                          style: TextStyle(color: Colors.white),
+                        ),
                   height: 70,
                 ),
               ],
@@ -91,6 +86,34 @@ class SignInPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _signinAction() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await Future.delayed(const Duration(seconds: 2));
+    var result = await sl<SignInUsecase>().call(
+      params: UserEntity(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      ),
+    );
+    result.fold((l) {
+      var snackbar = SnackBar(
+        content: Text(l),
+        behavior: SnackBarBehavior.floating,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    }, (r) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+          (route) => false);
+    });
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   _signUpOption(BuildContext context) {
@@ -110,7 +133,7 @@ class SignInPage extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
+                  MaterialPageRoute(builder: (context) => const SignUpPage()));
             },
             child: const Text(
               'Register Now',

@@ -5,6 +5,7 @@ import 'package:spotify_clone/presentation/home/widgets/home_tabs_widget.dart';
 import '../../../common/widgets/appbar/app_bar_widget.dart';
 import '../../../core/configs/assets/app_vectors.dart';
 import '../widgets/home_artist_widget.dart';
+import '../widgets/home_playlist_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -27,6 +28,7 @@ class HomePage extends StatelessWidget {
             HomeArtistWidget(
             ),
             HomeTabsWidget(),
+            HomePlaylistWidget()
           ],
         ),
       ),

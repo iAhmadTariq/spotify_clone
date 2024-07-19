@@ -6,7 +6,7 @@ import 'package:spotify_clone/service_locator.dart';
 
 class SignInUsecase implements Usecase<Either, UserEntity> {
   @override
-  Future<Either> call({required UserEntity params}) {
-    return sl<AuthRepository>().signIn(params);
+  Future<Either> call({UserEntity? params}) {
+    return sl<AuthRepository>().signIn(params!);
   }
 }

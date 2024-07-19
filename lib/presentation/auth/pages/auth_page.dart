@@ -75,9 +75,12 @@ class AuthPage extends StatelessWidget {
                       child: PrimaryAppButton(
                         height: 60,
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> const SignUpPage()));
                         },
-                        title: 'Register',
+                        title: const Text(
+                    'Register',
+                    style: TextStyle(color: Colors.white),
+                  ),
                       ),
                     ),
                     const SizedBox(
@@ -86,7 +89,7 @@ class AuthPage extends StatelessWidget {
                     Expanded(
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> SignInPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> const SignInPage()));
                         },
                         child: Text(
                           'Sign in',

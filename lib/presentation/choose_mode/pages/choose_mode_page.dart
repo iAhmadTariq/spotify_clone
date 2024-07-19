@@ -144,7 +144,10 @@ class ChooseModePage extends StatelessWidget {
                       ),
                     );
                   },
-                  title: 'Continue',
+                  title: const Text(
+                    'Continue',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 )
               ],
             ),

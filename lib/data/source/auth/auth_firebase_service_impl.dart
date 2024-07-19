@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:spotify_clone/core/const/firebase_const.dart';
+import 'package:spotify_clone/core/configs/const/firebase_const.dart';
 import 'package:spotify_clone/data/models/auth/user_model.dart';
 import 'package:spotify_clone/data/source/auth/auth_firebase_service.dart';
 import 'package:spotify_clone/domain/entities/auth/user_entity.dart';

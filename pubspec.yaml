@@ -46,6 +46,7 @@ dependencies:
   get_it:
   dartz:
   cloud_firestore:
+  loading_animation_widget:
   
 
 dev_dependencies:

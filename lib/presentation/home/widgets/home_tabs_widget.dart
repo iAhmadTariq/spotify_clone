@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_clone/common/helpers/is_dark_mode.dart';
 import 'package:spotify_clone/core/configs/themes/app_colors.dart';
+import 'package:spotify_clone/presentation/home/widgets/news_songs_widget.dart';
 
 class HomeTabsWidget extends StatefulWidget {
   const HomeTabsWidget({super.key});
@@ -21,42 +22,58 @@ class _HomeTabsWidgetState extends State<HomeTabsWidget>
 
   @override
   Widget build(BuildContext context) {
-    return TabBar(
-      tabAlignment:TabAlignment.start,
-      indicatorColor: AppColors.primaryColor,
-      controller: tabController,
-      labelColor: context.isDarkMode ? Colors.white : Colors.black,
-      dividerHeight: 0,
-      isScrollable: true,
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      tabs: const [
-        Text(
-          'News',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+    return Column(
+      children: [
+        TabBar(
+          tabAlignment:TabAlignment.start,
+          indicatorColor: AppColors.primaryColor,
+          controller: tabController,
+          labelColor: context.isDarkMode ? Colors.white : Colors.black,
+          dividerHeight: 0,
+          isScrollable: true,
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          tabs: const [
+            Text(
+              'News',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              'Videos',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              'Artist',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(
+              'Podcast',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ],
         ),
-        Text(
-          'Videos',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
-        Text(
-          'Artist',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
-        Text(
-          'Podcast',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+        
+        SizedBox(
+          height: 200,
+          child: TabBarView(
+            controller: tabController,
+            children: const [
+            NewsSongsWidget(),
+            NewsSongsWidget(),
+            NewsSongsWidget(),
+            NewsSongsWidget(),
+          ]),
         ),
       ],
     );

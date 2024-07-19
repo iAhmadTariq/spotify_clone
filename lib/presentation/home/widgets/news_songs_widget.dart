@@ -7,6 +7,7 @@ import 'package:spotify_clone/presentation/home/bloc/news_song_cubit.dart';
 import 'package:spotify_clone/presentation/home/bloc/news_song_state.dart';
 
 import '../../../domain/entities/song/song_entity.dart';
+import '../../song_player/pages/song_player_page.dart';
 
 class NewsSongsWidget extends StatelessWidget {
   const NewsSongsWidget({super.key});
@@ -41,34 +42,44 @@ class NewsSongsWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Container(
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                            image: NetworkImage(song.coverUrl!),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: Align(
-                          alignment: Alignment.bottomRight,
-                          child: Container(
-                            height: 30,
-                            width: 30,
-                            transform: Matrix4.translationValues(5, 8, 0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: context.isDarkMode
-                                  ? AppColors.lightBackgroundColor
-                                      .withOpacity(0.8)
-                                  : AppColors.darkBackgroundColor
-                                      .withOpacity(0.8),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SongPlayerPage(song: song),
                             ),
-                            child: Icon(
-                              Icons.play_arrow_rounded,
-                              color: !context.isDarkMode
-                                  ? AppColors.lightBackgroundColor
-                                  : AppColors.darkBackgroundColor,
+                          );
+                        },
+                        child: Container(
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(
+                              image: NetworkImage(song.coverUrl!),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              transform: Matrix4.translationValues(5, 8, 0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: context.isDarkMode
+                                    ? AppColors.lightBackgroundColor
+                                        .withOpacity(0.8)
+                                    : AppColors.darkBackgroundColor
+                                        .withOpacity(0.8),
+                              ),
+                              child: Icon(
+                                Icons.play_arrow_rounded,
+                                color: !context.isDarkMode
+                                    ? AppColors.lightBackgroundColor
+                                    : AppColors.darkBackgroundColor,
+                              ),
                             ),
                           ),
                         ),

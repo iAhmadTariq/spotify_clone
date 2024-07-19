@@ -23,13 +23,30 @@ class HomePage extends StatelessWidget {
       ),
       body:const Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            HomeArtistWidget(
-            ),
-            HomeTabsWidget(),
-            HomePlaylistWidget()
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              HomeArtistWidget(
+              ),
+              HomeTabsWidget(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Playlist',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              HomePlaylistWidget()
+            ],
+          ),
         ),
       ),
     );

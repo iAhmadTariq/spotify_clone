@@ -40,7 +40,7 @@ class HomePlaylistWidget extends StatelessWidget {
                 SongEntity song = songs[index];
                 return GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SongPlayerPage(song:song)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SongPlayerPage(song:song,songsList:songs)));
                   },
                   child: Row(
                     children: [

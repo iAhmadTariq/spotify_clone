@@ -10,8 +10,10 @@ import 'package:spotify_clone/presentation/song_player/bloc/song_player_state.da
 import '../../../core/configs/themes/app_colors.dart';
 
 class SongPlayerPage extends StatelessWidget {
+  final List<SongEntity> songsList;
   final SongEntity song;
-  const SongPlayerPage({super.key, required this.song});
+  const SongPlayerPage(
+      {super.key, required this.song, required this.songsList});
 
   @override
   Widget build(BuildContext context) {
@@ -104,11 +106,23 @@ class SongPlayerPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Slider(
-                value: context.read<SongPlayerCubit>().songPosition.inSeconds.toDouble(),
+                activeColor: AppColors.primaryColor,
+                value: context
+                    .read<SongPlayerCubit>()
+                    .songPosition
+                    .inSeconds
+                    .toDouble(),
                 min: 0.0,
-                max: context.read<SongPlayerCubit>().songDuration.inSeconds.toDouble() ,
-                onChanged: (value){}
-             ),
+                max: context
+                    .read<SongPlayerCubit>()
+                    .songDuration
+                    .inSeconds
+                    .toDouble(),
+                onChanged: (value) {
+                  final duration = Duration(seconds: value.toInt());
+                  context.read<SongPlayerCubit>().jumpTo(duration);
+                },
+              ),
               const SizedBox(
                 height: 5,
               ),
@@ -129,10 +143,23 @@ class SongPlayerPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.skip_previous_rounded,
-                    size: 30,
-                    color: AppColors.grey,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SongPlayerPage(
+                            song: playPrevSong(),
+                            songsList: songsList,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Icon(
+                      Icons.skip_previous_rounded,
+                      size: 30,
+                      color: AppColors.grey,
+                    ),
                   ),
                   const SizedBox(
                     width: 15,
@@ -159,10 +186,23 @@ class SongPlayerPage extends StatelessWidget {
                   const SizedBox(
                     width: 15,
                   ),
-                  const Icon(
-                    Icons.skip_next_rounded,
-                    size: 30,
-                    color: AppColors.grey,
+                  GestureDetector(
+                    onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SongPlayerPage(
+                                song: playNextSong(),
+                                songsList: songsList,
+                              ),
+                            ),
+                          );
+                        },
+                    child: const Icon(
+                      Icons.skip_next_rounded,
+                      size: 30,
+                      color: AppColors.grey,
+                    ),
                   ),
                 ],
               ),
@@ -173,6 +213,19 @@ class SongPlayerPage extends StatelessWidget {
         }
       },
     );
+  }
+
+  SongEntity playNextSong() {
+    final currentIndex = songsList.indexOf(song);
+    final nextIndex = (currentIndex + 1) % songsList.length;
+    final nextSong = songsList[nextIndex];
+    return nextSong;
+  }
+  SongEntity playPrevSong() {
+    final currentIndex = songsList.indexOf(song);
+    final nextIndex = (currentIndex - 1) % songsList.length;
+    final nextSong = songsList[nextIndex];
+    return nextSong;
   }
 
   String _foramtDuration(Duration duration) {

@@ -25,7 +25,7 @@ class SongPlayerPage extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-        create: (_) => SongPlayerCubit()..loadSong(song.songUrl!),
+        create: (_) => SongPlayerCubit()..loadSong(song),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Builder(builder: (context) {

@@ -49,6 +49,7 @@ dependencies:
   loading_animation_widget:
   just_audio:
   audio_session:
+  just_audio_background:
   
 
 dev_dependencies:
